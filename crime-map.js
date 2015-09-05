@@ -116,7 +116,18 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
             return crimeCatList.filter(function(a){
                 return a.name == crime
             })[0].color; });
-        //.style("opacity" ,0.8);
+
+    var drawLegendItem = function(color, dataName){
+        var legendList = $("#mapLegend >ul");
+        legendList.append('<li><div class="circle-div colorkey" style=background-color:' + color
+            + ' id="' + dataName + '" ></div><span class="data-title">'
+            + dataName + '</span></li>');
+    };
+
+
+    crimeCatList.forEach(function(item){
+        drawLegendItem(item.color, item.name)
+    })
 
 
 }

@@ -19,10 +19,28 @@
             stroke: #777;
         }
 
+        .circle-div {
+            border-radius: 50%; }
+
+        .colorkey {
+            height: 1rem;
+            width: 1rem;
+            -webkit-transform: translateY(20%);
+            -ms-transform: translateY(20%);
+            -moz-transform: translateY(20%);
+            transform: translateY(20%); }
+
+        .no-bullet-ul {
+            list-style: none;
+            padding: 0; }
+
     </style>
 </head>
 <body>
-    <div id="hexmap"></div>
+    <div class="container">
+        <div class="col-md-9"><div id="hexmap"></div></div>
+        <div class="col-md-3" id="mapLegend"><ul class="no-bullet-ul"></ul></div>
+    </div>
     <script src="js/crime-map.js"></script>
 </body>
 </html>
