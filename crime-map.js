@@ -41,8 +41,6 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
 
     var geoData = topojson.feature(topojsonData, topojsonData.objects["outer-london.geo"])//.features
 
-
-
     var projection = d3.geo.albers()
         .center([4.5, 51.5])
         .rotate([4.4, 0])
@@ -74,14 +72,6 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
         temp.color = categoryColors(i)
             crimeCatList.push(temp);
     }
-    crimeCategories.forEach(function(item){
-        var temp = {};
-        temp.name = item.name;
-        temp.color =
-        crimeCatList.push(item.name)
-    });
-
-    console.log(crimeCatList)
 
     var lengthArr = []
     hexbinned.forEach(function(d){
@@ -98,8 +88,6 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
         bin.maxCount = sorted[0].count;
 
     });
-
-    console.log(hexbinned,  maxNumber)
 
     colorScale.domain([0, Math.sqrt(maxNumber)])
 
