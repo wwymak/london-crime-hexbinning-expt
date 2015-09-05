@@ -15,9 +15,9 @@ var colorScale = d3.scale.linear()
 var categoryColors = d3.scale.category20c();
 
 var hexBinnedData;
-queue().defer(d3.json, "data/outer-london-topojson.json")
-    .defer(d3.csv, "data/2015-06-crime-filtered.csv")
-    .defer(d3.json, "Data/crime-categories.json")
+queue().defer(d3.json, "outer-london-topojson.json")
+    .defer(d3.csv, "2015-06-crime-filtered.csv")
+    .defer(d3.json, "crime-categories.json")
     .await(makeMyMap);
 
 function groupByType(array){
@@ -41,25 +41,7 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
 
     var geoData = topojson.feature(topojsonData, topojsonData.objects["outer-london.geo"])//.features
 
-    //http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object
-    //var center = d3.geo.centroid(geoData)
-    //var scale  = 150;
-    //var offset = [width/2, height/2];
-    //projection.scale(scale).center(center)
-    //    .translate(offset);
-    //
-    //geopath = d3.geo.path().projection(projection);
-    //
-    //var bounds  = geopath.bounds(topojsonData);
-    //var hscale  = scale*width  / (bounds[1][0] - bounds[0][0]);
-    //var vscale  = scale*height / (bounds[1][1] - bounds[0][1]);
-    //scale   = (hscale < vscale) ? hscale : vscale;
-    //offset  = [width - (bounds[0][0] + bounds[1][0])/2,
-    //    height - (bounds[0][1] + bounds[1][1])/2];
-    //
-    //// update to correct projection
-    //projection.scale(scale).translate(offset);
-    //geopath.projection(projection);
+
 
     var projection = d3.geo.albers()
         .center([4.5, 51.5])
@@ -68,11 +50,7 @@ function makeMyMap(err, topojsonData, crimeData, crimeCategories){
         .scale(50000)
         .translate([width / 2, height / 2]);
 
-    var geopath = d3.geo.path().projection(projection)
-
-    //svg.append("path").datum(topojson.feature(topojsonData, topojsonData.objects["outer-london.geo"]))
-    //    .attr("class", "land")
-    //    .attr("d", geopath);
+    var geopath = d3.geo.path().projection(projection);
 
     var boundary = topojson.mesh(topojsonData, topojsonData.objects["outer-london.geo"])
 
