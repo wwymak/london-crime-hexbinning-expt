@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/queue.v1.min.js"></script>
     <script src="d3.hexbin.js"></script>
     <meta charset="UTF-8">
     <title></title>
@@ -38,8 +38,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="col-md-9"><div id="hexmap"></div></div>
-        <div class="col-md-3" id="mapLegend"><ul class="no-bullet-ul"></ul></div>
+        <div class="row">
+            <div class="col-md-9"><div id="hexmap"></div></div>
+            <div class="col-md-3" id="mapLegend"><ul class="no-bullet-ul"></ul></div>
+        </div>
     </div>
     <script src="crime-map.js"></script>
 </body>
