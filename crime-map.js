@@ -30,17 +30,17 @@
    * each individual  crime that happened in that time period
    * this groups them by their keys and counts how many of each category there is
    * @param array
-   * @returns {Array}
+   * @returns {Array} [{type:'robbery', count: 123454}, {type: 'knife crime', count: 123}...]
    */
   function groupByType(array){
     var newArr = [], categories = {};
     for(var i = 0; i< array.length; i++){
-        var cur = array[i];
+        var cur = array[i]; //current crime data info obj
         var type = cur["Crime type"];
-        if (!(type in categories)) {
+        if (!(type in categories)) { //add new category if not in the cateogry info obj
             categories[type] = {type: type, count: 1};
         }
-        categories[type].count += 1;
+        categories[type].count += 1; //or if it's there increment count by 1
     }
     var keys =  Object.keys(categories);
     keys.forEach(function(d){
@@ -83,34 +83,38 @@
         hexBinnedData = hexbinned;
         var crimeCatList = [];
         for (var i = 0; i< crimeCategories.length; i++){
-            var item = crimeCategories[i]
+            var item = crimeCategories[i];
             var temp = {};
             temp.name = item.name;
-            temp.color = categoryColors(i)
+            temp.color = categoryColors(i);
                 crimeCatList.push(temp);
         }
 
         //this section is for finding out the max crime per binned
         //it's not used at the moment-- still figuring out what to do with it!
-        var lengthArr = []
+        var lengthArr = [];
         hexbinned.forEach(function(d){
             lengthArr.push(d.length)
         });
         var maxNumber = d3.max(lengthArr);
 
+        //further process the hexbinned data-- finding out which crime is most dominant in each hexagon bin
+        //also how many crimes there is
         hexbinned.forEach(function(bin){
             bin.groupedData = groupByType(bin);
+            //reverse sort so the first item in the array correspond to the crime
+            //category wiht most occurences in that bin
             var sorted = bin.groupedData.sort(function(a, b){
                 return b.count - a.count;
             });
-            //find out which crime is most dominant in each hexagon bin
-            //also how many crimes there is
             bin.maxType = sorted[0].type;
             bin.maxCount = sorted[0].count;
 
         });
 
-        colorScale.domain([0, Math.sqrt(maxNumber)])
+        //not really used at the moment-- haven't really figured out what to do with
+        //this aspect of the data yet
+        colorScale.domain([0, Math.sqrt(maxNumber)]);
 
         //add svg group, with class hexagon
         svg.append("g")
@@ -130,6 +134,12 @@
                     return a.name == crime
                 })[0].color; });
 
+        //draw the color legend so you can identify which crime is most dominant in an area
+      /**
+       * basically append a legend with a color circle and the crime name...
+       * @param color {String} hexcode/rgb/ etc -- valid css color variable
+       * @param dataName {String} crime cateogry name
+       */
         var drawLegendItem = function(color, dataName){
             var legendList = $("#mapLegend >ul");
             legendList.append('<li><div class="circle-div colorkey" style=background-color:' + color
